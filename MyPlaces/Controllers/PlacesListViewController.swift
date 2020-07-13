@@ -11,7 +11,10 @@ import UIKit
 final class PlacesListViewController: UIViewController {
     
     let tableView = UITableView()
-    let cat = ["Cat", "Cat"]
+    let places: [Place] = [
+        Place(place: "Island Bali", country: "Indonezia", days: 7, price: 1500, color: UIColor.customBlue, photo: UIImage(named: "1")!),
+        Place(place: "Kyiv", country: "Ukraine", days: 10, price: 1000, color: UIColor.customPink, photo: UIImage(named: "2")!)
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +26,13 @@ final class PlacesListViewController: UIViewController {
         view.backgroundColor = .white
         title = "My Places"
         navigationController?.navigationBar.prefersLargeTitles = true
-        
+        let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPlace))
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+    }
+    
+    @objc private func addPlace() {
+        let destVC = NewPlaceViewController()
+        navigationController?.pushViewController(destVC, animated: true)
     }
     
     private func configureTableView() {
@@ -39,7 +48,7 @@ final class PlacesListViewController: UIViewController {
 
 extension PlacesListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cat.count
+        return places.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -48,9 +57,14 @@ extension PlacesListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PlaceCell.identifier, for: indexPath) as! PlaceCell
-        cell.textLabel?.text = "Hello"
+        cell.cellData = places[indexPath.row]
         return cell
     }
+    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        tableView.deselectRow(at: indexPath, animated: true)
+//        let destVC = PlaceInfoViewController()
+//    }
     
     
 }
