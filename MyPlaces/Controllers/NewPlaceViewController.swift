@@ -12,6 +12,8 @@ final class NewPlaceViewController: UIViewController {
     
     private var safeArea: UILayoutGuide!
     private let imagePicker = UIImagePickerController()
+    
+    var retrievedLocation: MyLocation!
         
     private let placeImageView: UIImageView = {
         let imageView = UIImageView()
@@ -34,10 +36,10 @@ final class NewPlaceViewController: UIViewController {
         return button
     }()
     
-    private let coordinatesButton: UIButton = {
+    private lazy var locationButton: UIButton = {
         let button = UIButton()
+        let buttonImage = UIImage(systemName: "location")
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Locate", for: .normal)
         button.setImage(UIImage(systemName: "location"), for: .normal)
         button.backgroundColor = .link
         button.tintColor = .white
@@ -49,21 +51,71 @@ final class NewPlaceViewController: UIViewController {
     
     private let placeTextField = MPTextField(placeholder: "Place...")
     private let countryTextField = MPTextField(placeholder: "Country...")
-    private let daysTextField = MPTextField(placeholder: "Days...")
-    private let priceTextField = MPTextField(placeholder: "Price...")
+    private let daysTextField: MPTextField = {
+        let textField = MPTextField(placeholder: "Days...")
+        textField.keyboardType = .numberPad
+        return textField
+    }()
+    private let priceTextField: MPTextField = {
+        let textField = MPTextField(placeholder: "Price...")
+        textField.keyboardType = .numberPad
+        return textField
+    }()
+    private let locationTextField: MPTextField = {
+        let textField = MPTextField(placeholder: "Location...")
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.isUserInteractionEnabled = false
+        return textField
+    }()
+    
+    let customBlueButton = MPColoredButton(color: .customBlue)
+    let customPinkButton = MPColoredButton(color: .customPink)
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        createDismissKeyboardTapGesture()
+        addObserverToView()
         configureNavigation()
         configureImageView()
         configureDaysView()
         configureCoordinates()
     }
     
+    private func createDismissKeyboardTapGesture() {
+        let tap = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
+    }
+    
+    private func addObserverToView() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(sender:)), name: UIResponder.keyboardWillShowNotification, object: nil);
+
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(sender:)), name: UIResponder.keyboardWillHideNotification, object: nil);
+    }
+    
+    @objc func keyboardWillShow(sender: NSNotification) {
+         self.view.frame.origin.y = -150
+        
+    }
+
+    @objc func keyboardWillHide(sender: NSNotification) {
+         self.view.frame.origin.y = 0
+    }
+    
     private func configureNavigation() {
         title = "New Place"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPlace))
+        
+        if #available(iOS 13.0, *) {
+            let navBarAppearance = UINavigationBarAppearance()
+            navBarAppearance.configureWithOpaqueBackground()
+            navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+            navBarAppearance.backgroundColor = .white
+            navigationController?.navigationBar.standardAppearance = navBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        }
     }
     
     private func configureImageView() {
@@ -99,53 +151,75 @@ final class NewPlaceViewController: UIViewController {
             placeTextField.topAnchor.constraint(equalTo: placeImageView.bottomAnchor, constant: 30),
             placeTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             placeTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            placeTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 1/12),
+            placeTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 1/15),
             
             countryTextField.topAnchor.constraint(equalTo: placeTextField.bottomAnchor, constant: 10),
             countryTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             countryTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            countryTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 1/12),
+            countryTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 1/15),
             
             daysTextField.topAnchor.constraint(equalTo: countryTextField.bottomAnchor, constant: 10),
             daysTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             daysTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            daysTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 1/12),
+            daysTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 1/15),
             
             priceTextField.topAnchor.constraint(equalTo: daysTextField.bottomAnchor, constant: 10),
             priceTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             priceTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            priceTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 1/12),
+            priceTextField.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 1/15),
         ])
     }
     
     private func configureCoordinates() {
-        view.addSubview(coordinatesButton)
+        view.addSubview(locationButton)
+        view.addSubview(locationTextField)
         
         NSLayoutConstraint.activate([
-            coordinatesButton.topAnchor.constraint(equalTo: priceTextField.bottomAnchor, constant: 20),
-            coordinatesButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            coordinatesButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            coordinatesButton.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 1/15)
+            locationButton.topAnchor.constraint(equalTo: priceTextField.bottomAnchor, constant: 20),
+            locationButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            locationButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/5, constant: -20),
+            locationButton.heightAnchor.constraint(equalTo: safeArea.heightAnchor, multiplier: 1/15),
+            
+            locationTextField.leadingAnchor.constraint(equalTo: locationButton.trailingAnchor, constant: 5),
+            locationTextField.topAnchor.constraint(equalTo: locationButton.topAnchor),
+            locationTextField.bottomAnchor.constraint(equalTo: locationButton.bottomAnchor),
+            locationTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 4/5, constant: -25)
+            
         ])
         
-        coordinatesButton.addTarget(self, action: #selector(searchPlace), for: .touchUpInside)
+        locationButton.addTarget(self, action: #selector(searchPlace), for: .touchUpInside)
+    }
+    
+    private func configureColorPicker() {
+        
     }
     
     @objc private func searchPlace() {
-        let destVC = UINavigationController(rootViewController: CoordinatesViewController())
+        let coordinatesVC = CoordinatesViewController()
+        let destVC = UINavigationController(rootViewController: coordinatesVC)
+        coordinatesVC.delegate = self
         present(destVC, animated: true)
     }
     
     @objc private func addPlace() {
-        navigationController?.popToRootViewController(animated: true)
+//        if !placeTextField.text!.isEmpty && !countryTextField.text!.isEmpty && !daysTextField.text!.isEmpty && !priceTextField.text!.isEmpty && placeImageView.image != nil {
+//            let newPlace = MyPlace(place: placeTextField.text!, country: countryTextField.text!, days: Int(daysTextField.text!)!, price: Int(priceTextField.text!)!, color: UIColor.customBlue, photo: placeImageView.image!, location: retrievedLocation)
+//        }
+        
     }
 
     @objc private func choosePhoto() {
-        print("Tap!")
-        
         ImagePickerManager().pickImage(self) { (image) in
             self.centerButton.setImage(nil, for: .normal)
             self.placeImageView.image = image
         }
+    }
+}
+
+extension NewPlaceViewController: CoordinatesViewControllerDelegate {
+    func didChooseLocation(location: MyLocation) {
+        retrievedLocation = location
+        locationTextField.text = "\(retrievedLocation.locationName)"
+        locationButton.setImage(UIImage(systemName: "location.fill"), for: .normal)
     }
 }

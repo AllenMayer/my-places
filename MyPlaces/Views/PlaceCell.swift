@@ -13,7 +13,7 @@ final class PlaceCell: UITableViewCell {
     
     static let identifier = "PlaceCell"
     
-    var cellData: Place! {
+    var cellData: MyPlace! {
         didSet {
             placeTitle.text = cellData.place
             countryTitle.text = cellData.country
@@ -117,10 +117,10 @@ final class PlaceCell: UITableViewCell {
         containerStackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            containerStackView.leadingAnchor.constraint(equalTo: placeInfoView.leadingAnchor, constant: frame.size.width / 2.4),
+            containerStackView.leadingAnchor.constraint(equalTo: placeInfoView.leadingAnchor, constant: frame.size.width / 2.3),
             containerStackView.topAnchor.constraint(equalTo: placeInfoView.topAnchor, constant: 20),
             containerStackView.bottomAnchor.constraint(equalTo: placeInfoView.bottomAnchor, constant: -20),
-            containerStackView.trailingAnchor.constraint(equalTo: placeInfoView.trailingAnchor, constant: -40)
+            containerStackView.trailingAnchor.constraint(equalTo: placeInfoView.trailingAnchor, constant: -50)
         ])
     }
     
@@ -142,8 +142,8 @@ final class PlaceCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             placeImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            placeImageView.topAnchor.constraint(equalTo: topAnchor),
-            placeImageView.heightAnchor.constraint(equalTo: heightAnchor, constant: -30),
+            placeImageView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            placeImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 4/5),
             placeImageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 2/5)
         ])
     }

@@ -10,12 +10,19 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class CoordinatesViewController: UIViewController {
+protocol CoordinatesViewControllerDelegate {
+    func didChooseLocation(location: MyLocation)
+}
+
+final class CoordinatesViewController: UIViewController {
     
     let mapView = MKMapView()
     let locationManager = CLLocationManager()
     var previousLocation: CLLocation?
     let regionInMeters: Double = 10000
+    
+    var delegate: CoordinatesViewControllerDelegate!
+    var location = MyLocation(locationName: "", coordinates: CLLocation(latitude: 0, longitude: 0))
     
     var safeArea: UILayoutGuide!
     
@@ -41,9 +48,30 @@ class CoordinatesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        configure()
         configureMapView()
         checkLocationServices()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        location.locationName = locationTitle.text!
+        location.coordinates = CLLocation(latitude: previousLocation?.coordinate.latitude ?? 0, longitude: previousLocation?.coordinate.longitude ?? 0)
+    }
+    
+    private func configure() {
+        view.backgroundColor = .white
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(dismissMapVC))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "location"), style: .done, target: self, action: #selector(addLocation))
+    }
+    
+    @objc private func addLocation() {
+        delegate.didChooseLocation(location: self.location)
+        self.dismiss(animated: true)
+    }
+    
+    @objc private func dismissMapVC() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     private func configureMapView() {
@@ -121,7 +149,6 @@ class CoordinatesViewController: UIViewController {
     private func getCenterLocation(for mapView: MKMapView) -> CLLocation {
         let latitude = mapView.centerCoordinate.latitude
         let longitude = mapView.centerCoordinate.longitude
-        
         return CLLocation(latitude: latitude, longitude: longitude)
     }
 }
@@ -153,7 +180,7 @@ extension CoordinatesViewController: MKMapViewDelegate {
             guard let placemark = placemarks?.first else { return }
             let streetNumber = placemark.subThoroughfare ?? ""
             let streetName = placemark.thoroughfare ?? ""
-                        
+            
             DispatchQueue.main.async {
                 self.locationTitle.text = "\(streetNumber) \(streetName)"
             }

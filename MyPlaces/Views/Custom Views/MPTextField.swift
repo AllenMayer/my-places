@@ -13,7 +13,6 @@ final class MPTextField: UITextField {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
     }
     
     
@@ -45,7 +44,7 @@ final class MPTextField: UITextField {
         autocorrectionType          = .no
         returnKeyType               = .go
         clearButtonMode =           .whileEditing
-        self.placeholder                 = placeholder
+        self.placeholder            = placeholder
     }
 }
 

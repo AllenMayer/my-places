@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import CoreLocation
 
 final class PlacesListViewController: UIViewController {
     
     let tableView = UITableView()
-    let places: [Place] = [
-        Place(place: "Island Bali", country: "Indonezia", days: 7, price: 1500, color: UIColor.customBlue, photo: UIImage(named: "1")!),
-        Place(place: "Kyiv", country: "Ukraine", days: 10, price: 1000, color: UIColor.customPink, photo: UIImage(named: "2")!)
+    let places: [MyPlace] = [
+        MyPlace(place: "Bali", country: "Indonesia", days: 7, price: 1500, color: UIColor.customBlue, photo: UIImage(named: "1")!, location: MyLocation(locationName: "Bali", coordinates: CLLocation(latitude: 0, longitude: 0))),
+        MyPlace(place: "Kyiv", country: "Ukraine", days: 10, price: 1000, color: UIColor.customRed, photo: UIImage(named: "2")!, location: MyLocation(locationName: "Kyiv", coordinates: CLLocation(latitude: 0, longitude: 0)))
     ]
 
     override func viewDidLoad() {

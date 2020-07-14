@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		610B677B24BE447600EC5D58 /* MPColoredButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610B677A24BE447600EC5D58 /* MPColoredButton.swift */; };
 		619B6EE724BB4722000693C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619B6EE624BB4722000693C5 /* AppDelegate.swift */; };
 		619B6EE924BB4722000693C5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619B6EE824BB4722000693C5 /* SceneDelegate.swift */; };
 		619B6EEB24BB4722000693C5 /* PlacesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619B6EEA24BB4722000693C5 /* PlacesListViewController.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		610B677A24BE447600EC5D58 /* MPColoredButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPColoredButton.swift; sourceTree = "<group>"; };
 		619B6EE324BB4722000693C5 /* MyPlaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPlaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		619B6EE624BB4722000693C5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		619B6EE824BB4722000693C5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 			children = (
 				619B6F2A24BBAB48000693C5 /* MPLabel.swift */,
 				61FAA39524BCCA0C000D17A0 /* MPTextField.swift */,
+				610B677A24BE447600EC5D58 /* MPColoredButton.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				61FAA39824BCD4A1000D17A0 /* CoordinatesViewController.swift in Sources */,
+				610B677B24BE447600EC5D58 /* MPColoredButton.swift in Sources */,
 				61FAA39424BCAB97000D17A0 /* ImagePickerManager.swift in Sources */,
 				619B6EEB24BB4722000693C5 /* PlacesListViewController.swift in Sources */,
 				61FAA38C24BC9E12000D17A0 /* PlaceModel.swift in Sources */,

@@ -7,12 +7,19 @@
 //
 
 import UIKit
+import CoreLocation
 
-struct Place {
+struct MyPlace {
     let place: String
     let country: String
     let days: Int
     let price: Int
     let color: UIColor
     let photo: UIImage
+    let location: MyLocation
+}
+
+struct MyLocation {
+    var locationName: String
+    var coordinates: CLLocation
 }
