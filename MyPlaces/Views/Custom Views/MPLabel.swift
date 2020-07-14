@@ -19,6 +19,7 @@ final class MPLabel: UILabel {
         self.text = title
         self.font = UIFont.systemFont(ofSize: size, weight: weight)
         self.textColor = .white
+        self.translatesAutoresizingMaskIntoConstraints = false
     }
     
     required init?(coder: NSCoder) {
