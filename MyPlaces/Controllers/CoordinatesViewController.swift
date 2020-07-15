@@ -16,17 +16,18 @@ protocol CoordinatesViewControllerDelegate {
 
 final class CoordinatesViewController: UIViewController {
     
-    let mapView = MKMapView()
-    let locationManager = CLLocationManager()
-    var previousLocation: CLLocation?
-    let regionInMeters: Double = 10000
+    private let mapView = MKMapView()
+    private let locationManager = CLLocationManager()
+    private var previousLocation: CLLocation?
+    private let regionInMeters: Double = 5000
     
     var delegate: CoordinatesViewControllerDelegate!
-    var location = MyLocation(locationName: "", coordinates: CLLocation(latitude: 0, longitude: 0))
+    private var location = MyLocation(locationName: "", coordinates: CLLocation(latitude: 0, longitude: 0))
+    var delegatedLocation: MyLocation?
     
-    var safeArea: UILayoutGuide!
+    private var safeArea: UILayoutGuide!
     
-    let pinImageView: UIImageView = {
+    private let pinImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "pin")
@@ -35,7 +36,7 @@ final class CoordinatesViewController: UIViewController {
         return imageView
     }()
     
-    lazy var locationTitle: UILabel = {
+    private lazy var locationTitle: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: view.frame.size.height / 40, weight: .semibold)
         label.text = ""
@@ -156,9 +157,18 @@ final class CoordinatesViewController: UIViewController {
 extension CoordinatesViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-        let region = MKCoordinateRegion.init(center: center, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
-        mapView.setRegion(region, animated: true)
+        if let delegatedLocation = delegatedLocation {
+            let latitude = delegatedLocation.coordinates.coordinate.latitude
+            let longitude = delegatedLocation.coordinates.coordinate.longitude
+            let center = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            let region = MKCoordinateRegion.init(center: center, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
+            mapView.setRegion(region, animated: true)
+            self.locationTitle.text = delegatedLocation.locationName
+        } else {
+            let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            let region = MKCoordinateRegion.init(center: center, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
+            mapView.setRegion(region, animated: true)
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

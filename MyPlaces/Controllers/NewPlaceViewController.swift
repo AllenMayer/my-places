@@ -13,7 +13,7 @@ final class NewPlaceViewController: UIViewController {
     private var safeArea: UILayoutGuide!
     private let imagePicker = UIImagePickerController()
     
-    var retrievedLocation: MyLocation!
+    var retrievedLocation: MyLocation?
         
     private let placeImageView: UIImageView = {
         let imageView = UIImageView()
@@ -198,13 +198,17 @@ final class NewPlaceViewController: UIViewController {
         let coordinatesVC = CoordinatesViewController()
         let destVC = UINavigationController(rootViewController: coordinatesVC)
         coordinatesVC.delegate = self
+        if retrievedLocation != nil {
+            coordinatesVC.delegatedLocation = MyLocation(locationName: retrievedLocation!.locationName, coordinates: retrievedLocation!.coordinates)
+        }
         present(destVC, animated: true)
     }
     
     @objc private func addPlace() {
-//        if !placeTextField.text!.isEmpty && !countryTextField.text!.isEmpty && !daysTextField.text!.isEmpty && !priceTextField.text!.isEmpty && placeImageView.image != nil {
-//            let newPlace = MyPlace(place: placeTextField.text!, country: countryTextField.text!, days: Int(daysTextField.text!)!, price: Int(priceTextField.text!)!, color: UIColor.customBlue, photo: placeImageView.image!, location: retrievedLocation)
-//        }
+        if !placeTextField.text!.isEmpty && !countryTextField.text!.isEmpty && !daysTextField.text!.isEmpty && !priceTextField.text!.isEmpty && placeImageView.image != nil && retrievedLocation != nil {
+            let newPlace = MyPlace(place: placeTextField.text!, country: countryTextField.text!, days: Int(daysTextField.text!)!, price: Int(priceTextField.text!)!, color: UIColor.customBlue, photo: placeImageView.image!, location: retrievedLocation!)
+            print(newPlace.place)
+        }
         
     }
 
@@ -219,7 +223,7 @@ final class NewPlaceViewController: UIViewController {
 extension NewPlaceViewController: CoordinatesViewControllerDelegate {
     func didChooseLocation(location: MyLocation) {
         retrievedLocation = location
-        locationTextField.text = "\(retrievedLocation.locationName)"
+        locationTextField.text = "\(retrievedLocation!.locationName)"
         locationButton.setImage(UIImage(systemName: "location.fill"), for: .normal)
     }
 }
