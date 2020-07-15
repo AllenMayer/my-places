@@ -99,20 +99,11 @@ final class PlaceCell: UITableViewCell {
     private func setupStackViews() {
         addSubview(containerStackView)
         
-        daysStackView.addArrangedSubview(daysTitle)
-        daysStackView.addArrangedSubview(numberOfDaysTitle)
-
-        priceStackView.addArrangedSubview(priceTitle)
-        priceStackView.addArrangedSubview(priceAmountTitle)
-
-        daysAndPriceStackView.addArrangedSubview(daysStackView)
-        daysAndPriceStackView.addArrangedSubview(priceStackView)
-
-        locationStackView.addArrangedSubview(placeTitle)
-        locationStackView.addArrangedSubview(countryTitle)
-
-        containerStackView.addArrangedSubview(locationStackView)
-        containerStackView.addArrangedSubview(daysAndPriceStackView)
+        daysStackView.addArrangedSubviews(daysTitle, numberOfDaysTitle)
+        priceStackView.addArrangedSubviews(priceTitle, priceAmountTitle)
+        daysAndPriceStackView.addArrangedSubviews(daysStackView, priceStackView)
+        locationStackView.addArrangedSubviews(placeTitle, countryTitle)
+        containerStackView.addArrangedSubviews(locationStackView, daysAndPriceStackView)
         
         containerStackView.translatesAutoresizingMaskIntoConstraints = false
         

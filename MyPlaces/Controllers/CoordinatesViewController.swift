@@ -76,9 +76,7 @@ final class CoordinatesViewController: UIViewController {
     }
     
     private func configureMapView() {
-        view.addSubview(mapView)
-        view.addSubview(pinImageView)
-        view.addSubview(locationTitle)
+        view.addSubviews(mapView, pinImageView, locationTitle)
         
         safeArea = view.layoutMarginsGuide
         mapView.translatesAutoresizingMaskIntoConstraints = false

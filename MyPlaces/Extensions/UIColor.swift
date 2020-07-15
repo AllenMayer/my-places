@@ -1,5 +1,5 @@
 //
-//  UIColor+Custom.swift
+//  UIColor.swift
 //  MyPlaces
 //
 //  Created by Максим Семений on 13.07.2020.

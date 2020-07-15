@@ -16,10 +16,12 @@
 		619B6EF624BB4723000693C5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 619B6EF424BB4723000693C5 /* LaunchScreen.storyboard */; };
 		619B6F2624BB5257000693C5 /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619B6F2424BB5257000693C5 /* PlaceCell.swift */; };
 		619B6F2B24BBAB48000693C5 /* MPLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619B6F2A24BBAB48000693C5 /* MPLabel.swift */; };
+		61BAE02D24BF3461001B3E7C /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BAE02C24BF3461001B3E7C /* UIView.swift */; };
+		61BAE02F24BF3474001B3E7C /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BAE02E24BF3474001B3E7C /* UIStackView.swift */; };
 		61FAA38A24BC86C5000D17A0 /* NewPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FAA38924BC86C5000D17A0 /* NewPlaceViewController.swift */; };
 		61FAA38C24BC9E12000D17A0 /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FAA38B24BC9E12000D17A0 /* PlaceModel.swift */; };
 		61FAA38E24BCA0C9000D17A0 /* PlaceInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FAA38D24BCA0C9000D17A0 /* PlaceInfoViewController.swift */; };
-		61FAA39124BCA15C000D17A0 /* UIColor+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FAA39024BCA15C000D17A0 /* UIColor+Custom.swift */; };
+		61FAA39124BCA15C000D17A0 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FAA39024BCA15C000D17A0 /* UIColor.swift */; };
 		61FAA39424BCAB97000D17A0 /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FAA39324BCAB97000D17A0 /* ImagePickerManager.swift */; };
 		61FAA39624BCCA0C000D17A0 /* MPTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FAA39524BCCA0C000D17A0 /* MPTextField.swift */; };
 		61FAA39824BCD4A1000D17A0 /* CoordinatesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FAA39724BCD4A1000D17A0 /* CoordinatesViewController.swift */; };
@@ -37,10 +39,12 @@
 		619B6EF724BB4723000693C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		619B6F2424BB5257000693C5 /* PlaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
 		619B6F2A24BBAB48000693C5 /* MPLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPLabel.swift; sourceTree = "<group>"; };
+		61BAE02C24BF3461001B3E7C /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		61BAE02E24BF3474001B3E7C /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		61FAA38924BC86C5000D17A0 /* NewPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPlaceViewController.swift; sourceTree = "<group>"; };
 		61FAA38B24BC9E12000D17A0 /* PlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModel.swift; sourceTree = "<group>"; };
 		61FAA38D24BCA0C9000D17A0 /* PlaceInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInfoViewController.swift; sourceTree = "<group>"; };
-		61FAA39024BCA15C000D17A0 /* UIColor+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Custom.swift"; sourceTree = "<group>"; };
+		61FAA39024BCA15C000D17A0 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		61FAA39324BCAB97000D17A0 /* ImagePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
 		61FAA39524BCCA0C000D17A0 /* MPTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPTextField.swift; sourceTree = "<group>"; };
 		61FAA39724BCD4A1000D17A0 /* CoordinatesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatesViewController.swift; sourceTree = "<group>"; };
@@ -77,7 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				61FAA39224BCAB8C000D17A0 /* Services */,
-				61FAA38F24BCA134000D17A0 /* Utils */,
+				61FAA38F24BCA134000D17A0 /* Extensions */,
 				619B6F3124BBB312000693C5 /* Controllers */,
 				619B6F3024BBB2ED000693C5 /* Models */,
 				619B6F2F24BBB2DA000693C5 /* Database */,
@@ -145,12 +149,14 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		61FAA38F24BCA134000D17A0 /* Utils */ = {
+		61FAA38F24BCA134000D17A0 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				61FAA39024BCA15C000D17A0 /* UIColor+Custom.swift */,
+				61FAA39024BCA15C000D17A0 /* UIColor.swift */,
+				61BAE02C24BF3461001B3E7C /* UIView.swift */,
+				61BAE02E24BF3474001B3E7C /* UIStackView.swift */,
 			);
-			path = Utils;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		61FAA39224BCAB8C000D17A0 /* Services */ = {
@@ -241,8 +247,10 @@
 				619B6EE924BB4722000693C5 /* SceneDelegate.swift in Sources */,
 				61FAA38A24BC86C5000D17A0 /* NewPlaceViewController.swift in Sources */,
 				619B6EF124BB4722000693C5 /* MyPlaces.xcdatamodeld in Sources */,
+				61BAE02D24BF3461001B3E7C /* UIView.swift in Sources */,
+				61BAE02F24BF3474001B3E7C /* UIStackView.swift in Sources */,
 				619B6F2B24BBAB48000693C5 /* MPLabel.swift in Sources */,
-				61FAA39124BCA15C000D17A0 /* UIColor+Custom.swift in Sources */,
+				61FAA39124BCA15C000D17A0 /* UIColor.swift in Sources */,
 				61FAA39624BCCA0C000D17A0 /* MPTextField.swift in Sources */,
 				61FAA38E24BCA0C9000D17A0 /* PlaceInfoViewController.swift in Sources */,
 			);

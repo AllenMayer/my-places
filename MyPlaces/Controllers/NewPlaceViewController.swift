@@ -70,6 +70,19 @@ final class NewPlaceViewController: UIViewController {
     
     let customBlueButton = MPColoredButton(color: .customBlue)
     let customPinkButton = MPColoredButton(color: .customPink)
+    let customOrangeButton = MPColoredButton(color: .customOrange)
+    let customRedButton = MPColoredButton(color: .customRed)
+    let customTurquoiseButton = MPColoredButton(color: .customTurquoise)
+    lazy var buttons = [customRedButton, customBlueButton, customPinkButton, customOrangeButton, customTurquoiseButton]
+    
+    let coloredButtonsStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 10
+        return stackView
+    }()
     
 
     override func viewDidLoad() {
@@ -81,6 +94,7 @@ final class NewPlaceViewController: UIViewController {
         configureImageView()
         configureDaysView()
         configureCoordinates()
+        configureColoredButtons()
     }
     
     private func createDismissKeyboardTapGesture() {
@@ -142,10 +156,7 @@ final class NewPlaceViewController: UIViewController {
     }
     
     private func configureDaysView() {
-        view.addSubview(placeTextField)
-        view.addSubview(countryTextField)
-        view.addSubview(daysTextField)
-        view.addSubview(priceTextField)
+        view.addSubviews(placeTextField, countryTextField, daysTextField, priceTextField)
 
         NSLayoutConstraint.activate([
             placeTextField.topAnchor.constraint(equalTo: placeImageView.bottomAnchor, constant: 30),
@@ -171,8 +182,7 @@ final class NewPlaceViewController: UIViewController {
     }
     
     private func configureCoordinates() {
-        view.addSubview(locationButton)
-        view.addSubview(locationTextField)
+        view.addSubviews(locationButton, locationTextField)
         
         NSLayoutConstraint.activate([
             locationButton.topAnchor.constraint(equalTo: priceTextField.bottomAnchor, constant: 20),
@@ -190,8 +200,32 @@ final class NewPlaceViewController: UIViewController {
         locationButton.addTarget(self, action: #selector(searchPlace), for: .touchUpInside)
     }
     
-    private func configureColorPicker() {
+    private func configureColoredButtons() {
+        view.addSubview(coloredButtonsStackView)
+        coloredButtonsStackView.addArrangedSubviews(customRedButton, customBlueButton, customPinkButton, customOrangeButton, customTurquoiseButton)
         
+        NSLayoutConstraint.activate([
+            coloredButtonsStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            coloredButtonsStackView.topAnchor.constraint(equalTo: locationTextField.bottomAnchor, constant: 40),
+            coloredButtonsStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            coloredButtonsStackView.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
+        for button in buttons {
+            button.addTarget(self, action: #selector(coloredButtonSelected(_:)), for: .touchUpInside)
+        }
+    }
+    
+    @objc private func coloredButtonSelected(_ sender: UIButton) {
+        for button in buttons {
+            button.setImage(nil, for: .normal)
+        }
+        sender.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.20, initialSpringVelocity: 6, options: .allowUserInteraction, animations: {
+            sender.transform = CGAffineTransform.identity
+        })
+        sender.setImage(UIImage(systemName: "checkmark"), for: .normal)
+        locationButton.backgroundColor = sender.backgroundColor
     }
     
     @objc private func searchPlace() {
@@ -208,6 +242,10 @@ final class NewPlaceViewController: UIViewController {
         if !placeTextField.text!.isEmpty && !countryTextField.text!.isEmpty && !daysTextField.text!.isEmpty && !priceTextField.text!.isEmpty && placeImageView.image != nil && retrievedLocation != nil {
             let newPlace = MyPlace(place: placeTextField.text!, country: countryTextField.text!, days: Int(daysTextField.text!)!, price: Int(priceTextField.text!)!, color: UIColor.customBlue, photo: placeImageView.image!, location: retrievedLocation!)
             print(newPlace.place)
+        } else {
+            let alert = UIAlertController(title: "Error", message: "Please fill in all fields", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            show(alert, sender: self)
         }
         
     }

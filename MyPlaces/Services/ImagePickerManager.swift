@@ -42,7 +42,7 @@ final class ImagePickerManager: NSObject, UIImagePickerControllerDelegate, UINav
         alert.addAction(galleryAction)
         alert.addAction(cancelAction)
         alert.popoverPresentationController?.sourceView = self.viewController!.view
-        viewController.present(alert, animated: true, completion: nil)
+        viewController.present(alert, animated: true)
     }
     func openCamera(){
         alert.dismiss(animated: true, completion: nil)
@@ -69,7 +69,7 @@ final class ImagePickerManager: NSObject, UIImagePickerControllerDelegate, UINav
                 if status == .authorized {
                     DispatchQueue.main.async {
                         self.picker.sourceType = .photoLibrary
-                        self.viewController!.present(self.picker, animated: true, completion: nil)
+                        self.viewController!.present(self.picker, animated: true)
                     }
                 }
             }
@@ -86,7 +86,7 @@ final class ImagePickerManager: NSObject, UIImagePickerControllerDelegate, UINav
         if PHPhotoLibrary.authorizationStatus() == .authorized {
             DispatchQueue.main.async {
                 self.picker.sourceType = .photoLibrary
-                self.viewController!.present(self.picker, animated: true, completion: nil)
+                self.viewController!.present(self.picker, animated: true)
             }
         }
 

@@ -20,6 +20,9 @@ class MPColoredButton: UIButton {
     
     private func configure(with color: UIColor) {
         backgroundColor = color
+        layer.masksToBounds = true
+        layer.cornerRadius = 5
+        tintColor = .white
     }
     
     required init?(coder: NSCoder) {
