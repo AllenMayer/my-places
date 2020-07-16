@@ -14,7 +14,9 @@ final class NewPlaceViewController: UIViewController {
     private let imagePicker = UIImagePickerController()
     
     var retrievedLocation: MyLocation?
-        
+    
+    let persistenceManager = PersistenceManager.shared
+            
     private let placeImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -41,7 +43,7 @@ final class NewPlaceViewController: UIViewController {
         let buttonImage = UIImage(systemName: "location")
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "location"), for: .normal)
-        button.backgroundColor = .link
+        button.backgroundColor = buttons.first!.backgroundColor
         button.tintColor = .white
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 15
@@ -211,6 +213,8 @@ final class NewPlaceViewController: UIViewController {
             coloredButtonsStackView.heightAnchor.constraint(equalToConstant: 50)
         ])
         
+        buttons.first!.setImage(UIImage(systemName: "checkmark"), for: .normal)
+        
         for button in buttons {
             button.addTarget(self, action: #selector(coloredButtonSelected(_:)), for: .touchUpInside)
         }
@@ -233,19 +237,40 @@ final class NewPlaceViewController: UIViewController {
         let destVC = UINavigationController(rootViewController: coordinatesVC)
         coordinatesVC.delegate = self
         if retrievedLocation != nil {
-            coordinatesVC.delegatedLocation = MyLocation(locationName: retrievedLocation!.locationName, coordinates: retrievedLocation!.coordinates)
+            coordinatesVC.delegatedLocation = MyLocation(locationName: retrievedLocation!.locationName, latitude: retrievedLocation!.latitude, longitude: retrievedLocation!.longitude)
         }
         present(destVC, animated: true)
     }
     
     @objc private func addPlace() {
         if !placeTextField.text!.isEmpty && !countryTextField.text!.isEmpty && !daysTextField.text!.isEmpty && !priceTextField.text!.isEmpty && placeImageView.image != nil && retrievedLocation != nil {
-            let newPlace = MyPlace(place: placeTextField.text!, country: countryTextField.text!, days: Int(daysTextField.text!)!, price: Int(priceTextField.text!)!, color: UIColor.customBlue, photo: placeImageView.image!, location: retrievedLocation!)
-            print(newPlace.place)
+            
+            let color = locationButton.backgroundColor
+            let colorData = color!.encode()
+            let imageData = placeImageView.image!.jpegData(compressionQuality: 1.0)
+            
+            let location = Location(context: persistenceManager.context)
+            location.latitude = retrievedLocation!.latitude
+            location.longitude = retrievedLocation!.longitude
+            location.locationName = retrievedLocation!.locationName
+            
+            let place = Place(context: persistenceManager.context)
+            place.place = placeTextField.text!
+            place.country = countryTextField.text!
+            place.days = Int16(daysTextField.text!)!
+            place.price = Int16(priceTextField.text!)!
+            place.photo = imageData
+            place.color = colorData
+            place.location = location
+            
+            persistenceManager.save()
+            
+            navigationController?.popToRootViewController(animated: true)
+            
         } else {
             let alert = UIAlertController(title: "Error", message: "Please fill in all fields", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            show(alert, sender: self)
+            present(alert, animated: true)
         }
         
     }

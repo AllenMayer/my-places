@@ -11,13 +11,14 @@
 		619B6EE724BB4722000693C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619B6EE624BB4722000693C5 /* AppDelegate.swift */; };
 		619B6EE924BB4722000693C5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619B6EE824BB4722000693C5 /* SceneDelegate.swift */; };
 		619B6EEB24BB4722000693C5 /* PlacesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619B6EEA24BB4722000693C5 /* PlacesListViewController.swift */; };
-		619B6EF124BB4722000693C5 /* MyPlaces.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 619B6EEF24BB4722000693C5 /* MyPlaces.xcdatamodeld */; };
 		619B6EF324BB4723000693C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 619B6EF224BB4723000693C5 /* Assets.xcassets */; };
 		619B6EF624BB4723000693C5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 619B6EF424BB4723000693C5 /* LaunchScreen.storyboard */; };
 		619B6F2624BB5257000693C5 /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619B6F2424BB5257000693C5 /* PlaceCell.swift */; };
 		619B6F2B24BBAB48000693C5 /* MPLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619B6F2A24BBAB48000693C5 /* MPLabel.swift */; };
 		61BAE02D24BF3461001B3E7C /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BAE02C24BF3461001B3E7C /* UIView.swift */; };
 		61BAE02F24BF3474001B3E7C /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BAE02E24BF3474001B3E7C /* UIStackView.swift */; };
+		61D1FAA124BF60A9005AA7C3 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D1FAA024BF60A9005AA7C3 /* PersistenceManager.swift */; };
+		61D5E7C224BF5E58005EC700 /* MyPlaces.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 619B6EEF24BB4722000693C5 /* MyPlaces.xcdatamodeld */; };
 		61FAA38A24BC86C5000D17A0 /* NewPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FAA38924BC86C5000D17A0 /* NewPlaceViewController.swift */; };
 		61FAA38C24BC9E12000D17A0 /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FAA38B24BC9E12000D17A0 /* PlaceModel.swift */; };
 		61FAA38E24BCA0C9000D17A0 /* PlaceInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FAA38D24BCA0C9000D17A0 /* PlaceInfoViewController.swift */; };
@@ -41,6 +42,7 @@
 		619B6F2A24BBAB48000693C5 /* MPLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPLabel.swift; sourceTree = "<group>"; };
 		61BAE02C24BF3461001B3E7C /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		61BAE02E24BF3474001B3E7C /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
+		61D1FAA024BF60A9005AA7C3 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		61FAA38924BC86C5000D17A0 /* NewPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPlaceViewController.swift; sourceTree = "<group>"; };
 		61FAA38B24BC9E12000D17A0 /* PlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModel.swift; sourceTree = "<group>"; };
 		61FAA38D24BCA0C9000D17A0 /* PlaceInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInfoViewController.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				61FAA39324BCAB97000D17A0 /* ImagePickerManager.swift */,
+				61D1FAA024BF60A9005AA7C3 /* PersistenceManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61D5E7C224BF5E58005EC700 /* MyPlaces.xcdatamodeld in Sources */,
 				61FAA39824BCD4A1000D17A0 /* CoordinatesViewController.swift in Sources */,
 				610B677B24BE447600EC5D58 /* MPColoredButton.swift in Sources */,
 				61FAA39424BCAB97000D17A0 /* ImagePickerManager.swift in Sources */,
@@ -246,8 +250,8 @@
 				619B6EE724BB4722000693C5 /* AppDelegate.swift in Sources */,
 				619B6EE924BB4722000693C5 /* SceneDelegate.swift in Sources */,
 				61FAA38A24BC86C5000D17A0 /* NewPlaceViewController.swift in Sources */,
-				619B6EF124BB4722000693C5 /* MyPlaces.xcdatamodeld in Sources */,
 				61BAE02D24BF3461001B3E7C /* UIView.swift in Sources */,
+				61D1FAA124BF60A9005AA7C3 /* PersistenceManager.swift in Sources */,
 				61BAE02F24BF3474001B3E7C /* UIStackView.swift in Sources */,
 				619B6F2B24BBAB48000693C5 /* MPLabel.swift in Sources */,
 				61FAA39124BCA15C000D17A0 /* UIColor.swift in Sources */,

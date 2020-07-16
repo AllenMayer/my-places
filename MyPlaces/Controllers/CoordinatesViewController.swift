@@ -22,7 +22,7 @@ final class CoordinatesViewController: UIViewController {
     private let regionInMeters: Double = 5000
     
     var delegate: CoordinatesViewControllerDelegate!
-    private var location = MyLocation(locationName: "", coordinates: CLLocation(latitude: 0, longitude: 0))
+    private var location = MyLocation(locationName: "", latitude: 0, longitude: 0)
     var delegatedLocation: MyLocation?
     
     private var safeArea: UILayoutGuide!
@@ -57,7 +57,8 @@ final class CoordinatesViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         location.locationName = locationTitle.text!
-        location.coordinates = CLLocation(latitude: previousLocation?.coordinate.latitude ?? 0, longitude: previousLocation?.coordinate.longitude ?? 0)
+        location.latitude = previousLocation?.coordinate.latitude ?? 0
+        location.longitude = previousLocation?.coordinate.longitude ?? 0
     }
     
     private func configure() {
@@ -156,8 +157,8 @@ extension CoordinatesViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         if let delegatedLocation = delegatedLocation {
-            let latitude = delegatedLocation.coordinates.coordinate.latitude
-            let longitude = delegatedLocation.coordinates.coordinate.longitude
+            let latitude = delegatedLocation.latitude
+            let longitude = delegatedLocation.longitude
             let center = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             let region = MKCoordinateRegion.init(center: center, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
             mapView.setRegion(region, animated: true)

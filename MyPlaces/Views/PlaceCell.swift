@@ -13,14 +13,14 @@ final class PlaceCell: UITableViewCell {
     
     static let identifier = "PlaceCell"
     
-    var cellData: MyPlace! {
+    var cellData: Place! {
         didSet {
             placeTitle.text = cellData.place
             countryTitle.text = cellData.country
             numberOfDaysTitle.text = cellData.days == 1 ? "\(cellData.days) Day" : "\(cellData.days) Days"
             priceAmountTitle.text = "$\(cellData.price)"
-            placeInfoView.backgroundColor = cellData.color
-            placeImageView.image = cellData.photo
+            placeInfoView.backgroundColor = UIColor.color(data: cellData.color!)
+            placeImageView.image = UIImage(data: cellData.photo!)
         }
     }
 

@@ -12,15 +12,27 @@ import CoreLocation
 final class PlacesListViewController: UIViewController {
     
     let tableView = UITableView()
-    let places: [MyPlace] = [
-        MyPlace(place: "Bali", country: "Indonesia", days: 7, price: 1500, color: UIColor.customBlue, photo: UIImage(named: "1")!, location: MyLocation(locationName: "Bali", coordinates: CLLocation(latitude: 0, longitude: 0))),
-        MyPlace(place: "Kyiv", country: "Ukraine", days: 10, price: 1000, color: UIColor.customRed, photo: UIImage(named: "2")!, location: MyLocation(locationName: "Kyiv", coordinates: CLLocation(latitude: 0, longitude: 0)))
-    ]
-
+    var places = [Place]()
+    let persistenceManager: PersistenceManager
+    
+    init(persistenceManager: PersistenceManager) {
+        self.persistenceManager = persistenceManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
         configureTableView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        retrievePlaces()
     }
     
     private func configure() {
@@ -44,6 +56,13 @@ final class PlacesListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(PlaceCell.self, forCellReuseIdentifier: PlaceCell.identifier)
+        tableView.reloadData()
+    }
+    
+    private func retrievePlaces() {
+        let places = persistenceManager.fetch(Place.self)
+        self.places = places
+        tableView.reloadData()
     }
 }
 

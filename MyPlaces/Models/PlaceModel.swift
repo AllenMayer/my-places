@@ -21,5 +21,6 @@ struct MyPlace {
 
 struct MyLocation {
     var locationName: String
-    var coordinates: CLLocation
+    var latitude: Double
+    var longitude: Double
 }
